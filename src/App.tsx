@@ -8,7 +8,7 @@ import { Todo } from './types/Todo';
 export const App: React.FC = () => {
   const initialTodos: Todo[] = todosFromServer.map(todo => ({
     ...todo,
-    user: usersFromServer.find(u => u.id === todo.userId)!,
+    user: usersFromServer.find(user => user.id === todo.userId)!,
   }));
 
   const [todos, setTodos] = useState<Todo[]>(initialTodos);
@@ -31,8 +31,9 @@ export const App: React.FC = () => {
       return;
     }
 
-    const maxId = todos.length > 0 ? Math.max(...todos.map(t => t.id)) : 0;
-    const selectedUser = usersFromServer.find(u => u.id === userId)!;
+    const maxId =
+      todos.length > 0 ? Math.max(...todos.map(todo => todo.id)) : 0;
+    const selectedUser = usersFromServer.find(user => user.id === userId)!;
 
     const newTodo: Todo = {
       id: maxId + 1,
@@ -61,8 +62,8 @@ export const App: React.FC = () => {
             data-cy="titleInput"
             value={title}
             placeholder="Enter todo title"
-            onChange={e => {
-              setTitle(e.target.value);
+            onChange={event => {
+              setTitle(event.target.value);
               setTitleError(false);
             }}
           />
@@ -75,8 +76,8 @@ export const App: React.FC = () => {
             id="todo-user"
             data-cy="userSelect"
             value={userId}
-            onChange={e => {
-              setUserId(+e.target.value);
+            onChange={event => {
+              setUserId(+event.target.value);
               setUserError(false);
             }}
           >
